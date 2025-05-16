@@ -1,0 +1,132 @@
+/* Container for the login page */
+.admin-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('https://example.com/your-image.jpg') no-repeat center center fixed, linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Overlay to add opacity over background */
+  .admin-login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay with opacity */
+    z-index: 1;
+  }
+  
+  /* Form styling */
+  .admin-login-form {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  /* Heading styling */
+  .login-heading {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #f44336; /* Red color for error */
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeInError 1s ease-out;
+  }
+  
+  /* Input fields */
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #f4f7fa;
+  }
+  
+  .input-field:focus {
+    border-color: #6a11cb; /* Purple border when focused */
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(106, 17, 203, 0.5); /* Soft glow effect */
+  }
+  
+  /* Button styling */
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2575fc; /* Blue color for the button */
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-button:hover {
+    background-color: #6a11cb; /* Purple color on hover */
+    transform: translateY(-3px); /* Lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-button:active {
+    background-color: #5c10b0; /* Slightly darker on click */
+    transform: translateY(0); /* Reset to original position */
+  }
+  
+  /* Add some responsiveness for smaller screens */
+  @media (max-width: 500px) {
+    .admin-login-form {
+      padding: 20px;
+      width: 90%;
+    }
+  }
+  
+  /* Add subtle fade-in animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Add error fade-in animation */
+  @keyframes fadeInError {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

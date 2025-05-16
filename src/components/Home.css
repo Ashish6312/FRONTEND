@@ -1,0 +1,444 @@
+/* General Home Page Styling */
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff5f5;
+  min-height: calc(100vh - var(--header-height));
+}
+
+.home h2 {
+  text-align: center;
+  color: #b71c1c;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+/* Username Display */
+.home-username {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #b71c1c;
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 18px;
+  margin: 0 auto 18px auto;
+  box-shadow: 0 1px 4px rgba(183,28,28,0.06);
+  border: 1px solid #ffcdd2;
+  display: inline-block;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #b71c1c;
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 6px;
+  z-index: 1000;
+  width: 320px;
+  box-shadow: 0 4px 10px rgba(183,28,28,0.15);
+  font-size: 1rem;
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: #e57373;
+  transition: width 0.05s linear;
+}
+
+.toast-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+/* Wallet Section */
+.wallet-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 18px 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 8px rgba(183,28,28,0.08);
+  border: 1px solid #ffcdd2;
+}
+
+.wallet-section p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #b71c1c;
+}
+
+.toggle-wallet-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 15px;
+  color: #b71c1c;
+}
+
+.add-funds-btn {
+  background-color: #b71c1c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-funds-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Wallet Animation */
+.wallet-update-animation {
+  animation: pulseRed 1s ease-in-out;
+}
+
+@keyframes pulseRed {
+  0% { color: inherit; transform: scale(1); }
+  50% { color: #b71c1c; transform: scale(1.05); }
+  100% { color: inherit; }
+}
+
+/* Loading Indicator */
+.loader {
+  text-align: center;
+  margin: 25px 0;
+  font-style: italic;
+  color: #b71c1c;
+  font-size: 1rem;
+}
+
+/* Options Section */
+.options-section {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.options-section button {
+  background-color: #fff;
+  color: #b71c1c;
+  border: 1px solid #ffcdd2;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.options-section button:hover {
+  background-color: #b71c1c;
+  color: #fff;
+}
+
+/* Tab Section */
+.tab-section {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #b71c1c;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid #ffcdd2;
+}
+
+.tab-button:hover {
+  background: #ffcdd2;
+  color: #b71c1c;
+  transform: translateY(-1px);
+}
+
+.tab-button.active {
+  background: #b71c1c;
+  color: white;
+  box-shadow: 0 2px 4px rgba(183,28,28,0.10);
+}
+
+/* Plans Section */
+.plans-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.plan-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(183,28,28,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ffcdd2;
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 14px rgba(183,28,28,0.13);
+}
+
+.plan-card h4 {
+  color: #b71c1c;
+  margin-top: 0;
+  font-size: 1.25rem;
+  border-bottom: 1px solid #ffcdd2;
+  padding-bottom: 12px;
+  margin-bottom: 15px;
+}
+
+.plan-card p {
+  color: #b71c1c;
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+.plan-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.plan-card button {
+  background-color: #b71c1c;
+  color: white;
+  font-size: 1rem;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.plan-card button:hover {
+  background-color: #d32f2f;
+}
+
+.plan-card button:focus {
+  outline: none;
+}
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+
+/* Modal Styles */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.btn-cancel {
+  background-color: #fff;
+  border: 1px solid #ffcdd2;
+  color: #b71c1c;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn-confirm {
+  background-color: #b71c1c;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+  transition: background 0.3s;
+}
+
+.btn-cancel:hover {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+}
+
+.btn-confirm:hover {
+  background-color: #d32f2f;
+}
+
+/* Confirmation Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(183,28,28, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-modal {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 4px 10px rgba(183,28,28,0.13);
+  border: 1px solid #ffcdd2;
+}
+
+.confirmation-modal h3 {
+  margin-top: 0;
+  color: #b71c1c;
+  text-align: center;
+}
+
+.plan-details {
+  background-color: #fff5f5;
+  padding: 18px;
+  border-radius: 6px;
+  margin: 18px 0;
+  border: 1px solid #ffcdd2;
+}
+
+.plan-details p {
+  margin: 8px 0;
+  color: #b71c1c;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .home {
+    padding-bottom: calc(var(--mobile-nav-height) + 2rem);
+  }
+  
+  .plans-section {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    margin-bottom: 1rem;
+  }
+
+  .wallet-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .add-funds-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .plans-section {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-section button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .toast {
+    width: calc(100% - 40px);
+    right: 20px;
+  }
+}
+
+/* Wallet Actions */
+.wallet-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+  color: #b71c1c;
+  border: 1px solid #ffcdd2;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(183,28,28,0.10);
+  background-color: #ffcdd2;
+  color: #b71c1c;
+}
+
+.action-button.recharge {
+  background-color: #b71c1c;
+  color: white;
+  border: none;
+}
+
+.action-button.withdraw {
+  background-color: #fff;
+  color: #b71c1c;
+  border: 1px solid #ffcdd2;
+}
+
+.action-button.recharge:hover {
+  background-color: #d32f2f;
+  color: #fff;
+}
+
+.action-button.withdraw:hover {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+}
+
+.icon {
+  font-size: 20px;
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- Background Circle -->
+  <circle cx="250" cy="250" r="200" fill="#f8f9fa" />
+  
+  <!-- Outer Ring Gradient -->
+  <circle cx="250" cy="250" r="190" fill="none" stroke="url(#gradientGreen)" stroke-width="15" />
+  
+  <!-- Inner Shape - Dollar Sign Stylized -->
+  <path d="M265 150 C325 160, 325 200, 265 210 C215 220, 215 190, 265 180 
+           M265 210 C325 220, 325 260, 265 270 C215 280, 215 250, 265 240
+           M265 150 L265 270
+           M235 150 L235 270" 
+        fill="none" stroke="#2c7a57" stroke-width="20" stroke-linecap="round" />
+  
+  <!-- Accent Lines - Representing Growth/Success -->
+  <path d="M175 300 L225 250 L275 270 L325 220" 
+        fill="none" stroke="#4ade80" stroke-width="12" stroke-linecap="round" />
+  
+  <!-- Text Elements -->
+  <g>
+    <!-- EarnEase Text -->
+    <text x="250" y="350" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#2c7a57">EarnEase</text>
+  </g>
+  
+  <!-- Gradients Definitions -->
+  <defs>
+    <linearGradient id="gradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#2c7a57" />
+    </linearGradient>
+  </defs>
+</svg>
