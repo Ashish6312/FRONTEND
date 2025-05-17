@@ -12,7 +12,10 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Modal from 'react-modal';
 
-const socket = io(config.serverUrl);
+const socket = io('/socket.io', {
+  transports: ['websocket', 'polling']
+});
+
 
 const carouselImages = [
   '/images/carousel1.jpg',
