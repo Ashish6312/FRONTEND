@@ -410,7 +410,7 @@ function Transactions() {
               return;
             }
             if (!amount) return setToastMessage('Please enter an amount');
-            if (amount < 100) return setToastMessage('Withdraw amount must be at least ₹100');
+            if (amount < 150) return setToastMessage('Withdraw amount must be at least ₹150');
             if (amount > walletBreakdown.earnedInWallet) return setToastMessage('You can only withdraw your earned amount.');
             const amountToUser = amount * 0.9;
             const withdrawalFee = amount * 0.1;
