@@ -4,33 +4,33 @@ import { useNavigate } from 'react-router-dom';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      // Ensure bank info is properly initialized
+      return {
+        ...parsedUser,
+        bankInfo: parsedUser.bankInfo || {
+          accountNumber: '',
+          ifscCode: '',
+          realName: ''
+        }
+      };
+    }
+    return null;
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const initializeAuth = () => {
-      try {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          setUser({
-            ...parsedUser,
-            bankInfo: parsedUser.bankInfo && typeof parsedUser.bankInfo === 'object' && parsedUser.bankInfo.accountNumber !== undefined
-              ? parsedUser.bankInfo
-              : { accountNumber: '', ifscCode: '', realName: '' }
-          });
-        }
-      } catch (error) {
-        console.error('Error parsing stored user:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    initializeAuth();
-  }, []);
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user]);
 
   const updateUser = (newUserData) => {
+    // Ensure bank info is properly handled during updates
     const updatedUser = {
       ...user,
       ...newUserData,
@@ -44,26 +44,34 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
-  // Add login and logout functions for useUser
   const login = async (userData) => {
-    setUser({
-      ...userData,
-      bankInfo: userData.bankInfo && typeof userData.bankInfo === 'object' && userData.bankInfo.accountNumber !== undefined
-        ? userData.bankInfo
-        : { accountNumber: '', ifscCode: '', realName: '' }
-    });
-    localStorage.setItem('user', JSON.stringify({
-      ...userData,
-      bankInfo: userData.bankInfo && typeof userData.bankInfo === 'object' && userData.bankInfo.accountNumber !== undefined
-        ? userData.bankInfo
-        : { accountNumber: '', ifscCode: '', realName: '' }
-    }));
+    try {
+      setIsLoading(true);
+      // Ensure bank info is properly initialized during login
+      const userWithBankInfo = {
+        ...userData,
+        bankInfo: userData.bankInfo || {
+          accountNumber: '',
+          ifscCode: '',
+          realName: ''
+        }
+      };
+      setUser(userWithBankInfo);
+      localStorage.setItem('user', JSON.stringify(userWithBankInfo));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    sessionStorage.removeItem('welcomeModalShown');
+    setIsLoading(true);
+    try {
+      setUser(null);
+      localStorage.removeItem('user');
+      sessionStorage.removeItem('welcomeModalShown');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const value = {
