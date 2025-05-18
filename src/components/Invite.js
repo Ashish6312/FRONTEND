@@ -28,22 +28,11 @@ function Invite() {
           const referralsRes = await axios.get(`${config.serverUrl}/api/auth/profile/referrals/${user.inviteCode}`);
           const referrals = referralsRes.data.referrals || [];
 
-          // Fetch all users for referral calculations
-          const usersRes = await axios.get(`${config.serverUrl}/api/auth/all-users`);
-          const allUsers = usersRes.data.users || [];
-
-          // Helper: get all recharges for a user after their account creation
-          const getUserRecharges = (userPhone, createdAt) => {
-            return axios.get(`${config.serverUrl}/api/auth/transactions/${userPhone}`)
-              .then(res =>
-                (res.data.transactions || []).filter(
-                  tx => tx.type === 'Recharge' && tx.status.toLowerCase() === 'success' && new Date(tx.date) > new Date(createdAt)
-                )
-              );
-          };
+          // Fetch the user's current referral earnings
+          const earningsRes = await axios.get(`${config.serverUrl}/api/auth/referral-earnings/${user.phone}`);
+          const referralEarnings = earningsRes.data.totalEarnings || 0;
 
           // Build referral stats for each level
-          let totalReferralEarnings = 0;
           let totalReferrals = 0;
           let levelStats = {
             level1: { count: 0, earnings: 0 },
@@ -51,35 +40,23 @@ function Invite() {
             level3: { count: 0, earnings: 0 }
           };
 
-          // For each referral, check their level and calculate earnings
+          // For each referral, check their level
           for (const member of referrals) {
             const level = member.level;
             if (![1,2,3].includes(level)) continue;
             levelStats[`level${level}`].count++;
             totalReferrals++;
-            // Find the referred user in allUsers
-            const referredUser = allUsers.find(u => u.phone === member.phone);
-            if (referredUser) {
-              // Get all successful recharges after account creation
-              const recharges = await getUserRecharges(referredUser.phone, referredUser.createdAt);
-              const totalRecharge = recharges.reduce((sum, tx) => sum + tx.amount, 0);
-              let percent = 0;
-              if (level === 1) percent = 0.25;
-              if (level === 2) percent = 0.03;
-              if (level === 3) percent = 0.02;
-              const earning = totalRecharge * percent;
-              levelStats[`level${level}`].earnings += earning;
-              totalReferralEarnings += earning;
-              member.earnings = earning;
-            } else {
-              member.earnings = 0;
-            }
+            
+            // Get earnings for this member from their transactions
+            const referralTransactions = await axios.get(`${config.serverUrl}/api/auth/referral-transactions/${user.phone}/${member.phone}`);
+            member.earnings = referralTransactions.data.totalEarnings || 0;
+            levelStats[`level${level}`].earnings += member.earnings;
           }
 
           setTeamData({
             referrals,
             stats: {
-              totalReferralEarnings,
+              totalReferralEarnings: referralEarnings,
               totalReferrals,
               level1: levelStats.level1,
               level2: levelStats.level2,

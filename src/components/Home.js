@@ -12,7 +12,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Modal from 'react-modal';
 
-const socket = io('/socket.io', {
+const socket = io(`${config.serverUrl}`, {
   transports: ['websocket', 'polling']
 });
 
@@ -152,6 +152,12 @@ function Home() {
     navigate('/transactions', { state: { activeTab: 'withdraw' } });
   };
 
+  const calculatePlanMetrics = (plan) => {
+    return {
+      yearlyIncome: plan.dailyIncome * (plan.duration || 365)
+    };
+  };
+
   return (
     <div className="home">
       {showWelcomeModal && (
@@ -164,7 +170,7 @@ function Home() {
           ariaHideApp={false}
         >
           <div style={{ textAlign: 'center', padding: 24 }}>
-            <img src="/logo192.png" alt="Logo" style={{ width: 120, marginBottom: 16 }} />
+            <img src="\logo.svg" alt="Logo" style={{ width: 120, marginBottom: 16 }} />
             <h2>Welcome to EarnEase</h2>
             <p style={{ fontWeight: 500, margin: '12px 0' }}>
                <span style={{ color: '#e53935', fontWeight: 700 }}>Earn Much Profit 🎊🎉
@@ -265,21 +271,28 @@ function Home() {
         {plans.filter((plan) => plan.planType === activeTab).length > 0 ? (
           plans
             .filter((plan) => plan.planType === activeTab)
-            .map((plan) => (
-              <div key={plan._id} className="plan-card">
-                <h4>{plan.name}</h4>
-                <p>Price: ₹{plan.price}</p>
-                <p>Daily Income: ₹{plan.dailyIncome}</p>
-                {plan.image && (
-                  <img
-                    src={`${config.serverUrl}${plan.image}`}
-                    alt={plan.name}
-                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                  />
-                )}
-                <button onClick={() => handleBuyPlan(plan)}>Buy Now</button>
-              </div>
-            ))
+            .map((plan) => {
+              const metrics = calculatePlanMetrics(plan);
+              return (
+                <div key={plan._id} className="plan-card">
+                  {plan.image && (
+                    <img
+                      src={`${config.serverUrl}${plan.image}`}
+                      alt={plan.name}
+                      style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                    />
+                  )}
+                  <h3>{plan.name}</h3>
+                  <p className="price">Investment: ₹{plan.price}</p>
+                  <p className="daily-income">Daily Income: ₹{plan.dailyIncome}</p>
+                  <div className="plan-metrics">
+                    <p className="duration">Duration: {plan.duration || 365} days</p>
+                    <p className="total-income">Total Income: ₹{metrics.yearlyIncome}</p>
+                  </div>
+                  <button onClick={() => handleBuyPlan(plan)}>Buy Now</button>
+                </div>
+              );
+            })
         ) : (
           <p>No plans available in this category.</p>
         )}

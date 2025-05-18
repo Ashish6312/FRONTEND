@@ -200,19 +200,17 @@
 .plan-card {
   background-color: #fff;
   border-radius: 8px;
-  padding: 25px;
-  box-shadow: 0 4px 8px rgba(183,28,28,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
   position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #ffcdd2;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .plan-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 6px 14px rgba(183,28,28,0.13);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .plan-card h4 {
@@ -258,13 +256,42 @@
 .plan-card button:focus {
   outline: none;
 }
+
+.plan-metrics {
+  background-color: #fff5f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border: 1px solid #ffcdd2;
+}
+
+.plan-metrics p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+  color: #b71c1c;
+}
+
+.total-income {
+  font-weight: 600;
+}
+
+.recovery-days {
+  color: #4a148c !important;
+  font-weight: 500;
+}
+
+.total-profit {
+  color: #1b5e20 !important;
+  font-weight: 600;
+}
+
+/* Button Styles */
 button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 1rem;
 }
-
 
 /* Modal Styles */
 .modal-buttons {
