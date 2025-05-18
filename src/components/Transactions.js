@@ -7,7 +7,7 @@ import { useUser } from '../context/UserContext';
 import io from 'socket.io-client';
 import config from '../config/config';
 
-const socket = io('/socket.io', {
+const socket = io(`${config.serverUrl}`, {
   transports: ['websocket', 'polling']
 });
 

@@ -14,7 +14,8 @@ const AdminPanel = () => {
     price: '',
     dailyIncome: '',
     planType: 'PlanA',
-    image: null
+    image: null,
+    duration: 365 // New field with default value
   });
   const [previewImage, setPreviewImage] = useState(null);
   const [editingPlan, setEditingPlan] = useState(null);
@@ -113,6 +114,27 @@ const AdminPanel = () => {
     }
   };
 
+  // Update the metrics calculation function
+  const calculateMetrics = (price, dailyIncome, duration) => {
+    return {
+      yearlyIncome: dailyIncome * duration
+    };
+  };
+
+  const handleEdit = (plan) => {
+    setForm({
+      name: plan.name,
+      price: plan.price,
+      dailyIncome: plan.dailyIncome,
+      planType: plan.planType,
+      duration: plan.duration || 365,
+      image: null
+    });
+    setEditingPlan(plan);
+    setPreviewImage(plan.image ? `${config.serverUrl}${plan.image}` : null);
+    setMessage('');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -128,14 +150,19 @@ const AdminPanel = () => {
       formData.append('price', form.price);
       formData.append('dailyIncome', form.dailyIncome);
       formData.append('planType', form.planType);
+      formData.append('duration', form.duration || 365);
       if (form.image) {
         formData.append('image', form.image);
-      }      const axiosConfig = {
+      }
+
+      const axiosConfig = {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
-      };      if (editingPlan) {
+      };
+
+      if (editingPlan) {
         await axios.put(`${config.serverUrl}/api/plans/${editingPlan._id}`, formData, axiosConfig);
         setMessage('Plan updated successfully!');
       } else {
@@ -143,7 +170,15 @@ const AdminPanel = () => {
         setMessage('Plan added successfully!');
       }
 
-      setForm({ name: '', price: '', dailyIncome: '', planType: 'PlanA', image: null });
+      // Reset form and refresh plans list
+      setForm({ 
+        name: '', 
+        price: '', 
+        dailyIncome: '', 
+        planType: 'PlanA', 
+        duration: 365,
+        image: null 
+      });
       setPreviewImage(null);
       setEditingPlan(null);
       fetchPlans(token);
@@ -161,18 +196,6 @@ const AdminPanel = () => {
         setMessage('Network error. Please try again.');
       }
     }
-  };
-
-  const handleEdit = (plan) => {
-    setForm({
-      name: plan.name,
-      price: plan.price,
-      dailyIncome: plan.dailyIncome,
-      planType: plan.planType,
-      image: null
-    });    setEditingPlan(plan);
-    setPreviewImage(plan.image ? `${config.serverUrl}${plan.image}` : null);
-    setMessage('');
   };
 
   const handleDelete = async (id) => {
@@ -263,6 +286,13 @@ const AdminPanel = () => {
               onChange={(e) => setForm({ ...form, dailyIncome: e.target.value })}
               required
             />
+            <input
+              type="number"
+              placeholder="Duration (days)"
+              value={form.duration}
+              onChange={(e) => setForm({ ...form, duration: e.target.value })}
+              required
+            />
             <select
               value={form.planType}
               onChange={(e) => setForm({ ...form, planType: e.target.value })}
@@ -277,6 +307,26 @@ const AdminPanel = () => {
               <img src={previewImage} alt="Preview" style={{ width: '100px', margin: '10px 0' }} />
             )}
 
+            {/* Metrics Preview */}
+            {form.price && form.dailyIncome && form.duration && (
+              <div className="metrics-preview">
+                <h4>Plan Metrics Preview:</h4>
+                {(() => {
+                  const metrics = calculateMetrics(
+                    parseFloat(form.price),
+                    parseFloat(form.dailyIncome),
+                    parseInt(form.duration)
+                  );
+                  return (
+                    <>
+                      <p>Duration: {form.duration} days</p>
+                      <p>Total Income: ₹{metrics.yearlyIncome}</p>
+                    </>
+                  );
+                })()}
+              </div>
+            )}
+
             <button type="submit">{editingPlan ? 'Update Plan' : 'Add Plan'}</button>
           </form>
 
@@ -286,7 +336,12 @@ const AdminPanel = () => {
                 <h4>{plan.name}</h4>
                 <p>Price: ₹{plan.price}</p>
                 <p>Daily Income: ₹{plan.dailyIncome}</p>
-                <p>Type: {plan.planType}</p>            {plan.image && (
+                <p>Duration: {plan.duration || 365} days</p>
+                <p>Type: {plan.planType}</p>
+                <div className="plan-metrics">
+                  <p>Total Income: ₹{plan.yearlyIncome}</p>
+                </div>
+                {plan.image && (
                   <img
                     src={`${config.serverUrl}${plan.image}`}
                     alt={plan.name}
